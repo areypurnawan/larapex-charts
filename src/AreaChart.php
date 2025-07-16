@@ -15,8 +15,13 @@ class AreaChart extends LarapexChart implements MustAddComplexData
         $this->type = 'area';
     }
 
-    public function addArea(string $name, array $data) :AreaChart
+    public function addArea(string $name, array $data): AreaChart
     {
         return $this->addData($name, $data);
+    }
+
+    public function addAreaTraffic(string $name, array $data, array $categories, array $interfaces): AreaChart
+    {
+        return $this->addDataAreaTraffic($name, $data, $categories, $interfaces);
     }
 }
