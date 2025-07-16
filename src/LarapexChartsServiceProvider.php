@@ -2,8 +2,6 @@
 
 namespace ArielMejiaDev\LarapexCharts;
 
-use App\Console\Commands\ChartMakeCommand;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
 class LarapexChartsServiceProvider extends ServiceProvider
@@ -22,10 +20,6 @@ class LarapexChartsServiceProvider extends ServiceProvider
         });
 
         $this->mergeConfigFrom($this->packageBasePath('config/larapex-charts.php'), 'larapex-charts');
-
-        $this->commands([
-            \ArielMejiaDev\LarapexCharts\Console\ChartMakeCommand::class,
-        ]);
     }
 
     /**
@@ -35,31 +29,24 @@ class LarapexChartsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom($this->packageBasePath('stubs/resources/views'), 'larapex-charts');
+
+        $this->loadViewsFrom($this->packageBasePath('resources/views'), 'larapex-charts');
 
         $this->publishes([
-            $this->packageBasePath('stubs/public') => public_path('vendor/larapex-charts')
+            $this->packageBasePath('public/') => public_path('vendor/larapex-charts')
         ], 'larapex-charts-apexcharts-script');
 
         $this->publishes([
-            $this->packageBasePath('stubs/resources/views') => resource_path('views/vendor/larapex-charts')
+            $this->packageBasePath('resources/views') => resource_path('views/vendor/larapex-charts')
         ], 'larapex-charts-views');
 
         $this->publishes([
             $this->packageBasePath('config/larapex-charts.php') => base_path('config/larapex-charts.php')
-        ], 'larapex-charts-config');        
-
-        $this->publishes([
-            $this->packageBasePath('stubs/Console/Commands') => app_path('Console/Commands')
-        ], 'larapex-charts-commands');
-
-        $this->publishes([
-            $this->packageBasePath('stubs/stubs') => base_path('stubs')
-        ], 'larapex-charts-stubs');
+        ], 'larapex-charts-config');
 
     }
 
-    public function packageBasePath(string $path = ''): string
+    public function packageBasePath(string $path = '')
     {
         return __DIR__ . '/../' . $path;
     }
